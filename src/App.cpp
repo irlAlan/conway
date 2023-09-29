@@ -58,9 +58,6 @@ App::App(Gen::Vec2<float> dimensions)
     exit(-1); 
   }
 
-  SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255); // WHITE
-
-  SDL_RenderClear(renderer);
 }
 
 void App::run(){
@@ -69,17 +66,23 @@ void App::run(){
   // the black cubes etc
   Gen::print("We are running now\n");
 
-  SDL_SetRenderDrawColor( renderer, 0, 0, 0, 255 );
   block.makeBlock(getDimensions() / 2.f);
-  SDL_RenderFillRect(renderer, &block.rect);
 
   bool quit{false};
   while(!quit){
     while(SDL_PollEvent(&event)){
       if(event.type == SDL_QUIT) quit = true;
     }
-    // TODO: issues iguess
-    block.move(1);
+    SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255); // WHITE
+    // clear screen
+    SDL_RenderClear(renderer);
+    // TODO:move all the extra stuff outta here
+    // oh and change this frim int to double in header file lmao
+    block.move(0.3);
+    // draw
+    SDL_SetRenderDrawColor( renderer, 0, 0, 0, 255 );
+    SDL_RenderFillRect(renderer, &block.rect);
+    // update screen
     SDL_RenderPresent(renderer);
   }
 
