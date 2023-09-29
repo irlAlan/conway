@@ -7,6 +7,7 @@
 #ifndef APP_HPP
 #define APP_HPP
 
+
 // Singleton class
 class App{
 public:

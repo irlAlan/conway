@@ -1,7 +1,10 @@
 #include <iostream>
+#include <SDL.h>
+
 #include <Conway/App.hpp>
 
 int main(int argc, char **argv){
+
   App *Conway{App::GetInstance({1200.f, 800.f})};
   Conway->run();
   Conway->DestroyApp();

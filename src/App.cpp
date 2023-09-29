@@ -17,15 +17,21 @@ App *App::GetInstance(Gen::Vec2<float> dimensions){
 
 App::~App(){
   // Destroy window
+  // SDL_DestroyWindow(window);
+  // Destroy SDL subsystems
+  // SDL_Quit();
+  // delete pInstance;
+  // pInstance = nullptr;
+}
+
+void App::DestroyApp(){
+  // Destroy window
   SDL_DestroyWindow(window);
   // Destroy SDL subsystems
   SDL_Quit();
   delete pInstance;
   pInstance = nullptr;
-}
-
-void App::DestroyApp(){
-  this->~App();
+  // this->~App();
 }
 
 App::App(Gen::Vec2<float> dimensions)
