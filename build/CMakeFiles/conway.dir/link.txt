@@ -1,1 +1,0 @@
-/usr/bin/c++ CMakeFiles/conway.dir/src/main.cpp.o CMakeFiles/conway.dir/src/Block.cpp.o CMakeFiles/conway.dir/src/App.cpp.o -o conway  _deps/sdl2-build/libSDL2main.a _deps/sdl2-build/libSDL2.a -lm -pthread 
