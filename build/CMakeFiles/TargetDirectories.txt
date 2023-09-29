@@ -1,0 +1,11 @@
+/home/alan/top_secret/cpp/SDL2/conway/build/CMakeFiles/conway.dir
+/home/alan/top_secret/cpp/SDL2/conway/build/CMakeFiles/edit_cache.dir
+/home/alan/top_secret/cpp/SDL2/conway/build/CMakeFiles/rebuild_cache.dir
+/home/alan/top_secret/cpp/SDL2/conway/build/_deps/sdl2-build/CMakeFiles/sdl_headers_copy.dir
+/home/alan/top_secret/cpp/SDL2/conway/build/_deps/sdl2-build/CMakeFiles/SDL2main.dir
+/home/alan/top_secret/cpp/SDL2/conway/build/_deps/sdl2-build/CMakeFiles/SDL2.dir
+/home/alan/top_secret/cpp/SDL2/conway/build/_deps/sdl2-build/CMakeFiles/SDL2-static.dir
+/home/alan/top_secret/cpp/SDL2/conway/build/_deps/sdl2-build/CMakeFiles/SDL2_test.dir
+/home/alan/top_secret/cpp/SDL2/conway/build/_deps/sdl2-build/CMakeFiles/uninstall.dir
+/home/alan/top_secret/cpp/SDL2/conway/build/_deps/sdl2-build/CMakeFiles/edit_cache.dir
+/home/alan/top_secret/cpp/SDL2/conway/build/_deps/sdl2-build/CMakeFiles/rebuild_cache.dir

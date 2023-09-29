@@ -11,8 +11,8 @@ add_definitions("-Wall" "-g")
 
 include_directories(${CMAKE_SOURCE_DIR}/include)
 
-file(GLOB SRC_FILES ${CMAKE_SOURCE_DIR}/src/*.cpp)
-file(GLOB HEADER_FILES ${CMAKE_SOURCE_DIR}/include/*.hpp)
+# file(GLOB SRC_FILES ${CMAKE_SOURCE_DIR}/src/*.cpp)
+# file(GLOB HEADER_FILES ${CMAKE_SOURCE_DIR}/include/*.hpp)
 
 include(FetchContent)
 
@@ -25,5 +25,6 @@ FetchContent_Declare(
 FetchContent_MakeAvailable(SDL2)
 set(SDL_LIBRARIES ${SDL_LIBRARIES} SDL2main SDL2-static)
 
-add_executable(${PROJECT_NAME} ${SRC_FILES} ${HEADER_FILES})
+# add_executable(${PROJECT_NAME} ${SRC_FILES} ${HEADER_FILES})
+add_executable(${PROJECT_NAME} "./src/main.cpp" "./src/Block.cpp" "./src/App.cpp")
 target_link_libraries(${PROJECT_NAME} PRIVATE ${SDL_LIBRARIES})

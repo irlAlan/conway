@@ -1,5 +1,6 @@
 #include <iostream>
 #include <Conway/General.hpp>
+#include <Conway/Block.hpp>
 #include <mutex>
 
 #include "SDL.h"
@@ -14,6 +15,7 @@ public:
   static App *GetInstance(Gen::Vec2<float> dimensions);
   void DestroyApp();
   void run();
+  Gen::Vec2<float> getDimensions()const;
 
   // Singletons must not be cloneable 
   App(App &other) = delete;
@@ -25,7 +27,10 @@ protected:
   ~App();
 private: 
   SDL_Window *window{nullptr};
-  SDL_Surface *screen_surface{nullptr};
+  SDL_Renderer *renderer{nullptr};
+  SDL_Event event;
+  Block block;
+
 
   Gen::Vec2<float> AppDimension;
 

@@ -28,6 +28,14 @@ namespace Gen {
   template<typename T> 
   struct Vec2{
     T x; T y;
+  // testing operator overloading
+    Vec2<T> operator+(T val){return Vec2<T>{this->x + val, this->y + val};}
+    Vec2<T> operator+=(Vec2<T> val){return Vec2<T>{this->x += val.x, this->y += val.y};}
+    Vec2<T> operator+(Vec2<T> val){return Vec2<T>{this->x + val.x, this->y + val.y};}
+    Vec2<T> operator-(T val){return Vec2<T>{this->x - val, this->y - val};}
+    Vec2<T> operator-(Vec2<T> val){return Vec2<T>{this->x - val.x, this->y - val.y};}
+    Vec2<T> operator/(T val){return Vec2<T>{this->x / val, this->y / val};}
+    Vec2<T> operator/(Vec2<T> val){return Vec2<T>{this->x / val.x, this->y / val.y};}
   };
 }
 

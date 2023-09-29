@@ -1,4 +1,8 @@
+#include "SDL_events.h"
+#include "SDL_render.h"
+#include "SDL_timer.h"
 #include <Conway/App.hpp>
+#include <Conway/Block.hpp>
 #include <mutex>
 
 App *App::pInstance{nullptr};
@@ -48,14 +52,15 @@ App::App(Gen::Vec2<float> dimensions)
     Gen::print(std::cerr, "SDL CANNOT CREATE WINDOW, SDL ERROR: ", SDL_GetError(), '\n');
     exit(-1); 
   }
-  screen_surface = SDL_GetWindowSurface(window);
-  if(screen_surface == nullptr){
-    Gen::print(std::cerr, "SDL CANNOT CREATE SCREEN SURFACE, SDL ERROR: ", SDL_GetError(), '\n');
+  renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
+  if(renderer == nullptr){
+    Gen::print(std::cerr, "SDL CANNOT CREATE RENDERER, SDL ERROR: ", SDL_GetError(), '\n');
     exit(-1); 
   }
 
-  SDL_FillRect(screen_surface, nullptr, SDL_MapRGB(screen_surface->format, 0x00, 0x00, 0x00));
-  SDL_UpdateWindowSurface(window);
+  SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255); // WHITE
+
+  SDL_RenderClear(renderer);
 }
 
 void App::run(){
@@ -63,4 +68,23 @@ void App::run(){
   // like generating the drawable window
   // the black cubes etc
   Gen::print("We are running now\n");
+
+  SDL_SetRenderDrawColor( renderer, 0, 0, 0, 255 );
+  block.makeBlock(getDimensions() / 2.f);
+  SDL_RenderFillRect(renderer, &block.rect);
+
+  bool quit{false};
+  while(!quit){
+    while(SDL_PollEvent(&event)){
+      if(event.type == SDL_QUIT) quit = true;
+    }
+    // TODO: issues iguess
+    block.move(1);
+    SDL_RenderPresent(renderer);
+  }
+
+  SDL_DestroyWindow(window);
+  SDL_Quit();
 }
+
+Gen::Vec2<float> App::getDimensions()const{return AppDimension;}
