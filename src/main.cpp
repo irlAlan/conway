@@ -1,68 +1,25 @@
-#include <iostream>
-#include <SDL.h>
+#include <SDL2/SDL.h>
 
-#include <Conway/App.hpp>
+#include <CGLife/CGLife.h>
+#include <CGLife/Util.h>
 
-int main(int argc, char **argv){
+#include <chrono>
+#include <random>
 
-  App *Conway{App::GetInstance({1200.f, 800.f})};
-  Conway->run();
-  Conway->DestroyApp();
 
+// world pos e.g. 0-1200, 0-800
+// user enters position as a pixel pos: e.g. 1,1 or 10,10, 12,16 for top left pos
+
+
+int main() {
+  // 32bit mersenne twister seeded using steady clock for better randomness
+  std::mt19937 mt{static_cast<std::mt19937::result_type>(
+    std::chrono::steady_clock::now().time_since_epoch().count()
+  )};
+  // reusable uniform rand num generator between 0 and world bounds
+  std::uniform_int_distribution<> worldseed{0,winDimensions.x*winDimensions.y};
+  Util::Vec2i seed{worldseed(mt), worldseed(mt)};
+  CGLife game{"Game of life", seed};
+  // game.run();
   return 0;
 }
-
-
-
-// Generic print functions so i dont need to keep calling std::cout/cerr
-// template<typename ...T>
-// void print(const T &...args){
-//   auto printArg{[](const auto &arg){std::cout << arg;}};
-//   (printArg(args), ...);
-// }
-// template<typename ...T>
-// void print(std::ostream &out, const T &...args){
-//   auto printArg{[&out](const auto &arg){out << arg;}};
-//   (printArg(args), ...);
-// }
-// 
-// 
-// constexpr int WIDTH{1200};
-// constexpr int HEIGHT{800};
-// 
-// int main(int argc, char **argv){
-// 
-//   SDL_Window *window{nullptr};
-//   SDL_Surface *screen_surface{nullptr};
-// 
-//   if(SDL_Init(SDL_INIT_VIDEO) < 0){
-//     print(std::cerr, "SDL CANNOT OUTPUT VIDEO, SDL ERROR: ", SDL_GetError(), '\n');
-//     exit(-1);
-//   }
-// 
-//   window = SDL_CreateWindow("Conways Game of Life", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, WIDTH, HEIGHT, SDL_WINDOW_SHOWN);
-//   if(window == nullptr){
-//     print(std::cerr, "SDL CANNOT CREATE WINDOW, SDL ERROR: ", SDL_GetError(), '\n');
-//     exit(-1); 
-//   }
-//   screen_surface = SDL_GetWindowSurface(window);
-//   if(screen_surface == nullptr){
-//     print(std::cerr, "SDL CANNOT CREATE SCREEN SURFACE, SDL ERROR: ", SDL_GetError(), '\n');
-//     exit(-1); 
-//   }
-// 
-//   SDL_FillRect(screen_surface, nullptr, SDL_MapRGB(screen_surface->format, 0xFF, 0xFF, 0xFF));
-//   SDL_UpdateWindowSurface(window);
-// 
-//   SDL_Event event;
-//   bool quit{false};
-//   while(!quit){
-//     while(SDL_PollEvent(&event)){
-//       if(event.type == SDL_QUIT) quit = true;
-//     }
-//   }
-// 
-//   SDL_DestroyWindow(window);
-//   SDL_Quit();
-//   return 0;
-// }
