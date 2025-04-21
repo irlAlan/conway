@@ -18,13 +18,13 @@
 // x - row 
 
 class CGLife {
-  using Arr2p = std::array<std::array<std::unique_ptr<Pixel>,winDimensions.y>,winDimensions.x>;
+  using Arr2p = std::array<std::array<std::unique_ptr<Pixel>,winDimensions.x>,winDimensions.y>;
 public:
   CGLife(std::string_view title, Util::Vec2i seed);
   ~CGLife();
   void run();
   // dont need this after swapping from vec to 2d vec
-  Util::Pos worldToArrIndex(int row, int column);
+  // Util::Pos worldToArrIndex(int row, int column);
 
 private:
   void draw();

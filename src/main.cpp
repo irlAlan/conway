@@ -20,6 +20,6 @@ int main() {
   std::uniform_int_distribution<> worldseed{0,winDimensions.x*winDimensions.y};
   Util::Vec2i seed{worldseed(mt), worldseed(mt)};
   CGLife game{"Game of life", seed};
-  // game.run();
+  game.run();
   return 0;
 }

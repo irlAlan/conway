@@ -45,26 +45,28 @@ CGLife::CGLife(std::string_view title, Util::Vec2i seed)
   SDL_RenderSetLogicalSize(renderer, winDimensions.x, winDimensions.y);
 
   // use the seed to randomly generate alive pixels
-  int randx{(seed.x / winDimensions.x) / 10};
-  int randy{(seed.y / winDimensions.y) / 10};
-  fmt::println(fmt::format("randx {}, randy {}", randx, randy));
-  int row{0};
-  int column{0};
+  int randx{(seed.x / winDimensions.y)/10};
+  int randy{(seed.y / winDimensions.x)/10};
+  // fmt::println(fmt::format("randx {}, randy {}", randx, randy));
+  int row_y{0};
+  int column_x{0};
   for (auto &val : pxls) {
     for (auto &p : val) {
       p = std::unique_ptr<Pixel>(
-          new Pixel({row * 10, column * 10}, PixelState::Dead));
-      if (column == winDimensions.y)
-        column = 0;
-      if (row == winDimensions.x)
-        row = 0;
+          new Pixel({column_x * 10, row_y * 10}, PixelState::Dead));
+      // fmt::println("pos: ({},{})", column_x, row_y);
+      if (column_x == winDimensions.x)
+        column_x = 0;
+      if (row_y == winDimensions.y)
+        row_y = 0;
 
-      column += 1;
+      column_x += 1;
     }
-    row += 1;
+    row_y += 1;
   }
   // default start for pixels
   // TODO: do bounds checking and wrap around
+  pxls[randy][randx]->setState(PixelState::Alive);
   pxls[randy][randx]->setState(PixelState::Alive);
   Util::Pos joinedPos{randx + 600, randy};
   if (joinedPos.x + 1 > winDimensions.x) {
@@ -197,9 +199,13 @@ void CGLife::update(float dt) {
       //  -> 3. Any live cell with more than 3 live neighbours dies
       //  -> 4. Any dead cell with exactly 3 live neighbours becomes live
 
+      fmt::println("Checking neighbours");
       count = checkNeighbour(px->getPos());
-      fmt::println(fmt::format("Count: {}", count));
-     //if (px->getState() == "Alive" && (count >= 4 || count <2)) {
+      if(count != 0){
+        fmt::println(fmt::format("Count: {}, Pos ({},{})", count, px->getPos().x, px->getPos().y));
+        SDL_Delay(100);
+      }
+     //if (px->getState() == "Alive" && (count < 2)) {
      //  // alive and has 3 or more alive neighbours so it dies
      //  px->setState(PixelState::Dead);
      //}
@@ -271,10 +277,10 @@ int CGLife::checkNeighbour(const Util::Pos &pos) {
   Util::Pos left = boundsCheck({pos.x / 10, (pos.y - 1) / 10});
   Util::Pos right = boundsCheck({pos.x / 10, (pos.y + 1) / 10});
 
-  Util::Pos diagul = boundsCheck({(pos.x - 1)/10, (pos.y-1)/10}); // up right
-  Util::Pos diagur = boundsCheck({(pos.x + 1)/10, (pos.y-1)/10}); // up left
-  Util::Pos diagdl = boundsCheck({(pos.x-1)/10, (pos.y + 1)/10}); // down left
-  Util::Pos diagdr = boundsCheck({(pos.x+1)/10, (pos.y + 1)/10}); // down right
+  //Util::Pos diagul = boundsCheck({(pos.x - 1)/10, (pos.y-1)/10}); // up right
+  //Util::Pos diagur = boundsCheck({(pos.x + 1)/10, (pos.y-1)/10}); // up left
+  //Util::Pos diagdl = boundsCheck({(pos.x-1)/10, (pos.y + 1)/10}); // down left
+  //Util::Pos diagdr = boundsCheck({(pos.x+1)/10, (pos.y + 1)/10}); // down right
 
   if (pxls[down.x][down.y]->getState() == "Alive")
     count += 1;
@@ -285,14 +291,14 @@ int CGLife::checkNeighbour(const Util::Pos &pos) {
   if (pxls[right.x][right.y]->getState() == "Alive")
     count += 1;
 
-  if (pxls[diagul.x][diagul.y]->getState() == "Alive")
-    count += 1;
-  if (pxls[diagur.x][diagur.y]->getState() == "Alive")
-    count += 1;
-  if (pxls[diagdl.x][diagdl.y]->getState() == "Alive")
-    count += 1;
-  if (pxls[diagdr.x][diagdr.y]->getState() == "Alive")
-    count += 1;
+  //if (pxls[diagul.x][diagul.y]->getState() == "Alive")
+  //  count += 1;
+  //if (pxls[diagur.x][diagur.y]->getState() == "Alive")
+  //  count += 1;
+  //if (pxls[diagdl.x][diagdl.y]->getState() == "Alive")
+  //  count += 1;
+  //if (pxls[diagdr.x][diagdr.y]->getState() == "Alive")
+  //  count += 1;
 
   //fmt::println(fmt::format("Count: {}", count));
   return count;
@@ -317,6 +323,6 @@ Util::Pos CGLife::boundsCheck(const Util::Pos &p) {
 }
 
 // should be /
-Util::Pos CGLife::worldToArrIndex(int row, int column) {
-  return {row * 10, column * 10};
-}
+// Util::Pos CGLife::worldToArrIndex(int row, int column) {
+//   return {row * 10, column * 10};
+// }
